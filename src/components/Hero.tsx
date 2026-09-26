@@ -98,7 +98,7 @@ export default function Hero() {
           ))}
         </div>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 md:grid md:grid-cols-3 lg:flex lg:flex-col">
         <Link
           href="/marketplace"
           className="group relative block h-36 overflow-hidden rounded-xl sm:h-44 lg:h-auto lg:flex-1"
@@ -180,7 +180,7 @@ export default function Hero() {
           className="group block overflow-hidden rounded-xl bg-[#f0e6d9]"
         >
           <Image
-            src="/images/lo.png"
+            src="/images/lo-1.png"
             alt="Sundry Blossom — Elevate Your Style. Accessories for a brighter you."
             width={1664}
             height={945}

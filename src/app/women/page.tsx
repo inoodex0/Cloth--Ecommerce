@@ -9,7 +9,7 @@ export default function WomenPage() {
   return (
     <div className="flex flex-1 flex-col bg-white font-sans">
       <section className="w-full px-4 py-6">
-        <div className="grid items-stretch gap-4 lg:grid-cols-[1.2fr_1fr]">
+        <div className="grid items-stretch gap-4 md:grid-cols-[1.2fr_1fr]">
           <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-zinc-100 sm:aspect-[16/10] lg:aspect-auto lg:min-h-[480px]">
             <Image
               src="/images/women/women.avif"

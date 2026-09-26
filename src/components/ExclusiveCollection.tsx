@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 const tiles = [
   { src: "/images/men/men.avif", label: "Men's Collection", href: "/men" },
@@ -9,6 +12,25 @@ const tiles = [
 ];
 
 export default function ExclusiveCollection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => undefined);
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="w-full px-4 pb-6">
       <div className="grid gap-4 lg:grid-cols-[1.7fr_1fr]">
@@ -17,6 +39,7 @@ export default function ExclusiveCollection() {
           className="group relative block overflow-hidden rounded-xl bg-zinc-900"
         >
           <video
+            ref={videoRef}
             src="/videos/cloth.mp4"
             autoPlay
             muted
@@ -46,7 +69,7 @@ export default function ExclusiveCollection() {
         </Link>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
         {tiles.map((tile) => (
           <Link
             key={tile.href}

@@ -117,7 +117,7 @@ function LinkColumn({
 export default function Footer() {
   return (
     <footer className="mt-auto w-full border-t border-zinc-200 bg-white">
-      <div className="grid w-full gap-8 px-4 py-10 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid w-full gap-8 px-4 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         <div>
           <h3 className="mb-3 text-base font-bold text-zinc-900">Contact Us</h3>
           <ul className="space-y-2.5 text-sm text-zinc-600">

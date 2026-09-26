@@ -97,18 +97,38 @@ function formatParts(ms: number) {
   ];
 }
 
-export default function DailyDeals() {
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const [parts, setParts] = useState(["00", "00", "00"]);
-  const [pages, setPages] = useState(1);
-  const [activePage, setActivePage] = useState(0);
+function Countdown() {
+  const [parts, setParts] = useState(() => formatParts(msUntilMidnight()));
 
   useEffect(() => {
     const update = () => setParts(formatParts(msUntilMidnight()));
-    update();
     const timer = setInterval(update, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-xs font-bold tracking-wider text-white/90">
+        ENDS IN
+      </span>
+      {parts.map((part, index) => (
+        <span key={index} className="flex items-center gap-1.5">
+          {index > 0 && (
+            <span className="text-lg font-bold text-white">:</span>
+          )}
+          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-base font-bold text-[#4438b8] sm:h-10 sm:w-10">
+            {part}
+          </span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+export default function DailyDeals() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [pages, setPages] = useState(1);
+  const [activePage, setActivePage] = useState(0);
 
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -154,21 +174,7 @@ export default function DailyDeals() {
             <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
               Daily Deals
             </h2>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold tracking-wider text-white/90">
-                ENDS IN
-              </span>
-              {parts.map((part, index) => (
-                <span key={index} className="flex items-center gap-1.5">
-                  {index > 0 && (
-                    <span className="text-lg font-bold text-white">:</span>
-                  )}
-                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-base font-bold text-[#4438b8] sm:h-10 sm:w-10">
-                    {part}
-                  </span>
-                </span>
-              ))}
-            </div>
+            <Countdown />
           </div>
 
           <Link
