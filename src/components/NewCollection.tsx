@@ -80,8 +80,7 @@ export default function NewCollection() {
       <div className="relative">
         <div
           ref={scrollerRef}
-          data-lenis-prevent
-          className="flex gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex gap-4 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {products.map((product) => (
             <Link

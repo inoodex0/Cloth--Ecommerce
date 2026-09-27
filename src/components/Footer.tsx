@@ -1,4 +1,5 @@
 import { Mail, MapPin, Phone, Apple, Play } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const companyLinks = [
@@ -165,39 +166,72 @@ export default function Footer() {
             ))}
           </div>
 
-          <h3 className="mb-3 mt-6 text-base font-bold text-zinc-900">
-            Download App
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href="#"
-              className="flex h-11 items-center gap-2.5 rounded-lg bg-zinc-900 px-3.5 text-white transition-opacity hover:opacity-85"
-            >
-              <Play className="h-5 w-5 fill-current" />
-              <span className="flex flex-col leading-tight">
-                <span className="text-[9px] uppercase">Get it on</span>
-                <span className="text-sm font-semibold">Google Play</span>
-              </span>
-            </a>
-            <a
-              href="#"
-              className="flex h-11 items-center gap-2.5 rounded-lg bg-zinc-900 px-3.5 text-white transition-opacity hover:opacity-85"
-            >
-              <Apple className="h-5 w-5" />
-              <span className="flex flex-col leading-tight">
-                <span className="text-[9px] uppercase">Download on the</span>
-                <span className="text-sm font-semibold">App Store</span>
-              </span>
-            </a>
+            <h3 className="mb-3 mt-6 text-base font-bold text-zinc-900">
+              Download App
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="#"
+                className="flex h-11 items-center gap-2.5 rounded-lg bg-zinc-900 px-3.5 text-white transition-opacity hover:opacity-85"
+              >
+                <Play className="h-5 w-5 fill-current" />
+                <span className="flex flex-col leading-tight">
+                  <span className="text-[9px] uppercase">Get it on</span>
+                  <span className="text-sm font-semibold">Google Play</span>
+                </span>
+              </a>
+              <a
+                href="#"
+                className="flex h-11 items-center gap-2.5 rounded-lg bg-zinc-900 px-3.5 text-white transition-opacity hover:opacity-85"
+              >
+                <Apple className="h-5 w-5" />
+                <span className="flex flex-col leading-tight">
+                  <span className="text-[9px] uppercase">Download on the</span>
+                  <span className="text-sm font-semibold">App Store</span>
+                </span>
+              </a>
+            </div>
+
+            <h3 className="mb-3 mt-6 text-base font-bold text-zinc-900">
+              Payment Methods
+            </h3>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex h-8 items-center justify-center rounded border border-zinc-200 bg-white px-2.5 shadow-2xs">
+                <Image
+                  src="/hero/bkash.png"
+                  alt="bKash"
+                  width={56}
+                  height={22}
+                  className="h-5 w-auto object-contain"
+                />
+              </div>
+              <div className="flex h-8 items-center justify-center rounded border border-zinc-200 bg-white px-2 shadow-2xs">
+                <Image
+                  src="/hero/nagad.jpg"
+                  alt="Nagad"
+                  width={56}
+                  height={22}
+                  className="h-5 w-auto object-contain rounded-xs"
+                />
+              </div>
+              <div className="flex h-8 items-center justify-center rounded border border-zinc-200 bg-white px-2.5 text-xs font-bold text-[#1a1f71] shadow-2xs">
+                VISA
+              </div>
+              <div className="flex h-8 items-center justify-center rounded border border-zinc-200 bg-white px-2.5 text-xs font-bold text-[#eb001b] shadow-2xs">
+                Mastercard
+              </div>
+              <div className="flex h-8 items-center justify-center rounded border border-zinc-200 bg-white px-2.5 text-xs font-bold text-emerald-700 shadow-2xs">
+                COD
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="border-t border-zinc-200">
-        <p className="px-4 py-5 text-center text-sm text-zinc-600">
-          © 2026 Loomora Lifestyle Ltd. All Rights Reserved.
-        </p>
-      </div>
-    </footer>
-  );
-}
+        <div className="border-t border-zinc-200">
+          <p className="px-4 py-5 text-center text-sm text-zinc-600">
+            © 2026 Loomora Lifestyle Ltd. All Rights Reserved.
+          </p>
+        </div>
+      </footer>
+    );
+  }

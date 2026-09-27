@@ -98,7 +98,7 @@ export default function Hero() {
           ))}
         </div>
       </div>
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-3 lg:flex lg:flex-col">
+      <div className="flex flex-col gap-4">
         <Link
           href="/marketplace"
           className="group relative block h-36 overflow-hidden rounded-xl sm:h-44 lg:h-auto lg:flex-1"

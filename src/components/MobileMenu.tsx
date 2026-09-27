@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
-  const lenis = useSmoothScroll();
+  const lenisRef = useSmoothScroll();
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -22,6 +22,7 @@ export default function MobileMenu() {
     document.addEventListener("keydown", handleKeyDown);
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const lenis = lenisRef?.current;
     lenis?.stop();
 
     return () => {
@@ -29,7 +30,7 @@ export default function MobileMenu() {
       document.body.style.overflow = previousOverflow;
       lenis?.start();
     };
-  }, [open, close, lenis]);
+  }, [open, close, lenisRef]);
 
   return (
     <>

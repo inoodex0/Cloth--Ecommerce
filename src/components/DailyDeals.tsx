@@ -98,12 +98,16 @@ function formatParts(ms: number) {
 }
 
 function Countdown() {
-  const [parts, setParts] = useState(() => formatParts(msUntilMidnight()));
+  const [parts, setParts] = useState(() => ["00", "00", "00"]);
 
   useEffect(() => {
     const update = () => setParts(formatParts(msUntilMidnight()));
     const timer = setInterval(update, 1000);
-    return () => clearInterval(timer);
+    const frame = requestAnimationFrame(update);
+    return () => {
+      clearInterval(timer);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
@@ -189,8 +193,7 @@ export default function DailyDeals() {
         <div className="relative mt-5">
           <div
             ref={scrollerRef}
-            data-lenis-prevent
-            className="flex gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex gap-4 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {deals.map((deal) => (
               <Link

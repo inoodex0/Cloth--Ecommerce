@@ -72,7 +72,6 @@ export default function ChatWidget() {
 
           <div
             ref={bodyRef}
-            data-lenis-prevent
             className="flex-1 space-y-2.5 overflow-y-auto bg-zinc-50 p-4"
           >
             {messages.map((message, index) => (

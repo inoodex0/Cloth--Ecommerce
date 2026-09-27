@@ -66,8 +66,7 @@ export default function PopularCategories() {
 
       <div
         ref={scrollerRef}
-        data-lenis-prevent
-        className="flex gap-5 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-5 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {popularCategories.map((category) => (
           <Link

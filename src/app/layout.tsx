@@ -3,8 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ChatWidget from "@/components/ChatWidget";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { CartProvider } from "@/providers/CartProvider";
 import { GsapProvider } from "@/providers/GsapProvider";
 import { SmoothScrollProvider } from "@/providers/SmoothScrollProvider";
+import { WishlistProvider } from "@/providers/WishlistProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,15 +28,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <SmoothScrollProvider>
           <GsapProvider>
-            <Navbar />
-            {children}
-            <Footer />
-            <ChatWidget />
+            <CartProvider>
+              <WishlistProvider>
+                <Navbar />
+                {children}
+                <Footer />
+                <ChatWidget />
+              </WishlistProvider>
+            </CartProvider>
           </GsapProvider>
         </SmoothScrollProvider>
       </body>

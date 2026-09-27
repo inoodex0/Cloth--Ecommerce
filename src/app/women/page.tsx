@@ -1,54 +1,51 @@
-import Image from "next/image";
-import Link from "next/link";
+import CatalogPageLayout from "@/components/CatalogPageLayout";
+import { catalog } from "@/lib/catalog";
 
 export const metadata = {
-  title: "Women — Loomora",
+  title: "Women's Fashion & Clothing — Loomora",
+  description: "Shop trendy women's sarees, kurti sets, tops, tunics, palazzos, and winter wear at Loomora.",
 };
+
+const topSubcategories = [
+  "Womens Saree",
+  "Womens Kurti",
+  "Womens 2 Pcs Set",
+  "Womens 3 Pcs Set",
+  "Womens Tops",
+  "Womens Tunic",
+  "Womens Palazzo",
+  "Womens Denim",
+  "Womens Jacket",
+  "Womens Nightwear",
+  "Clothing & Fashion",
+];
+
+const categories = [
+  "Womens Saree",
+  "Womens Kurti",
+  "Womens 2 Pcs Set",
+  "Womens 3 Pcs Set",
+  "Womens Tops",
+  "Womens Palazzo",
+  "Womens Denim",
+  "Womens Cardigan",
+  "Womens Jacket",
+  "Womens Ethnic Wear",
+  "Womens Winter Wear",
+];
+
+const brands = ["Loomora", "DHEU", "Loomora Women", "Loomora Signature"];
+
+const products = catalog.filter((product) => product.id.startsWith("w-"));
 
 export default function WomenPage() {
   return (
-    <div className="flex flex-1 flex-col bg-white font-sans">
-      <section className="w-full px-4 py-6">
-        <div className="grid items-stretch gap-4 md:grid-cols-[1.2fr_1fr]">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-zinc-100 sm:aspect-[16/10] lg:aspect-auto lg:min-h-[480px]">
-            <Image
-              src="/images/women/women.avif"
-              alt="Women's collection"
-              fill
-              priority
-              sizes="(min-width: 1024px) 60vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-
-          <div className="flex flex-col justify-center gap-4 rounded-xl bg-gradient-to-br from-white to-rose-50 p-6 sm:p-10">
-            <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#12509b]">
-              New Season
-            </span>
-            <h1 className="text-3xl font-extrabold leading-tight text-zinc-900 sm:text-5xl">
-              Women&apos;s Collection
-            </h1>
-            <p className="max-w-md text-sm leading-relaxed text-zinc-600 sm:text-base">
-              Floral prints, soft fabrics and effortless silhouettes for every
-              day of the season.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/new-in"
-                className="inline-flex h-10 items-center rounded-full bg-[#12509b] px-6 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              >
-                Shop New In
-              </Link>
-              <Link
-                href="/festival-26"
-                className="inline-flex h-10 items-center rounded-full border border-zinc-300 px-6 text-sm font-semibold text-zinc-700 transition-colors hover:border-[#12509b] hover:text-[#12509b]"
-              >
-                Festival 26
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <CatalogPageLayout
+      title="Womens"
+      topSubcategories={topSubcategories}
+      categories={categories}
+      brands={brands}
+      products={products}
+    />
   );
 }

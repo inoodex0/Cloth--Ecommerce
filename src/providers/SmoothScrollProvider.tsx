@@ -3,66 +3,62 @@
 import "lenis/dist/lenis.css";
 
 import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   createContext,
   useContext,
   useEffect,
-  useState,
-  useSyncExternalStore,
+  useRef,
   type ReactNode,
+  type RefObject,
 } from "react";
 
-function createLenisStore() {
-  let instance: Lenis | null = null;
-  const listeners = new Set<() => void>();
-
-  return {
-    get: () => instance,
-    set(next: Lenis | null) {
-      instance = next;
-      listeners.forEach((listener) => listener());
-    },
-    subscribe(listener: () => void) {
-      listeners.add(listener);
-      return () => {
-        listeners.delete(listener);
-      };
-    },
-  };
-}
-
-const SmoothScrollContext = createContext<Lenis | null>(null);
+const SmoothScrollContext = createContext<RefObject<Lenis | null> | null>(null);
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
-  const [store] = useState(createLenisStore);
-
-  const lenis = useSyncExternalStore(store.subscribe, store.get, () => null);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-    if (prefersReducedMotion || isTouchDevice) return;
+    const instance = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      allowNestedScroll: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
+      infinite: false,
+    });
+    lenisRef.current = instance;
 
-    const instance = new Lenis({ lerp: 0.1, smoothWheel: true });
-    store.set(instance);
+    gsap.registerPlugin(ScrollTrigger);
+    const onScroll = () => {
+      ScrollTrigger.update();
+    };
+    instance.on("scroll", onScroll);
 
     let rafId = 0;
-    const loop = (time: number) => {
+    const raf = (time: number) => {
       instance.raf(time);
-      rafId = requestAnimationFrame(loop);
+      rafId = requestAnimationFrame(raf);
     };
-    rafId = requestAnimationFrame(loop);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
       cancelAnimationFrame(rafId);
+      instance.off("scroll", onScroll);
       instance.destroy();
-      store.set(null);
+      lenisRef.current = null;
     };
-  }, [store]);
+  }, []);
 
-  return <SmoothScrollContext.Provider value={lenis}>{children}</SmoothScrollContext.Provider>;
+  return (
+    <SmoothScrollContext.Provider value={lenisRef}>
+      {children}
+    </SmoothScrollContext.Provider>
+  );
 }
 
 export function useSmoothScroll() {

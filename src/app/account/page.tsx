@@ -1,0 +1,464 @@
+"use client";
+
+import {
+  ArrowRight,
+  Check,
+  Eye,
+  EyeOff,
+  Lock,
+  Mail,
+  Phone,
+  User,
+} from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+
+const inputClass =
+  "h-11 w-full rounded-lg border border-zinc-300 bg-white pl-10 pr-4 text-sm text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus:border-[#12509b] focus:ring-2 focus:ring-[#12509b]/10";
+
+const labelClass =
+  "block text-xs font-bold uppercase tracking-wider text-zinc-700";
+
+export default function AuthPage() {
+  const [mode, setMode] = useState<"login" | "register">("login");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Form States
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
+
+  // Register States
+  const [fullName, setFullName] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPhone, setRegisterPhone] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [agreeTerms, setAgreeTerms] = useState(true);
+
+  // Status & Feedback
+  const [submitting, setSubmitting] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+
+    setTimeout(() => {
+      setSubmitting(false);
+      setToast("Welcome back! You have successfully signed in.");
+      setTimeout(() => setToast(null), 3500);
+    }, 1000);
+  };
+
+  const handleRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (registerPassword !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    setSubmitting(true);
+
+    setTimeout(() => {
+      setSubmitting(false);
+      setToast("Account created successfully! Welcome to Loomora.");
+      setTimeout(() => {
+        setToast(null);
+        setMode("login");
+      }, 2500);
+    }, 1200);
+  };
+
+  return (
+    <div className="flex min-h-[calc(100vh-140px)] flex-1 items-center justify-center bg-[#f4f6fb] px-4 py-10 sm:py-14">
+      {/* Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-xl bg-zinc-900 px-5 py-3.5 text-sm font-medium text-white shadow-2xl">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-white">
+            <Check className="h-4 w-4 stroke-[3]" />
+          </span>
+          <span>{toast}</span>
+        </div>
+      )}
+
+      {/* Auth Card */}
+      <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-zinc-200 bg-white px-6 py-8 shadow-[0_25px_60px_-25px_rgba(18,80,155,0.35)] sm:px-10 sm:py-12">
+        {/* Brand Header */}
+        <div className="text-center">
+          <Link href="/" className="inline-flex flex-col items-center leading-none">
+            <span className="text-3xl font-black tracking-tight text-[#12509b]">
+              Loomora
+            </span>
+            <span className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.35em] text-zinc-500">
+              lifestyle ltd
+            </span>
+          </Link>
+        </div>
+
+        <div className="mt-8">
+            {/* Toggle Tabs */}
+            <div className="flex rounded-xl bg-zinc-100 p-1">
+              <button
+                type="button"
+                onClick={() => setMode("login")}
+                className={`flex-1 rounded-lg py-2.5 text-sm font-bold transition-all ${
+                  mode === "login"
+                    ? "bg-white text-[#12509b] shadow-sm"
+                    : "text-zinc-600 hover:text-zinc-900"
+                }`}
+              >
+                Sign In
+              </button>
+              <button
+                type="button"
+                onClick={() => setMode("register")}
+                className={`flex-1 rounded-lg py-2.5 text-sm font-bold transition-all ${
+                  mode === "register"
+                    ? "bg-white text-[#12509b] shadow-sm"
+                    : "text-zinc-600 hover:text-zinc-900"
+                }`}
+              >
+                Create Account
+              </button>
+            </div>
+
+            {/* LOGIN FORM */}
+            {mode === "login" && (
+              <form onSubmit={handleLogin} className="mt-7 space-y-4">
+                <div>
+                  <h1 className="text-2xl font-extrabold tracking-tight text-zinc-900">
+                    Welcome back
+                  </h1>
+                  <p className="mt-1.5 text-sm text-zinc-500">
+                    Sign in with your mobile number or email to continue.
+                  </p>
+                </div>
+
+                {/* Email / Phone Field */}
+                <div className="space-y-1.5 pt-2">
+                  <label className={labelClass}>
+                    Phone Number or Email
+                  </label>
+                  <div className="relative">
+                    <input
+                      required
+                      type="text"
+                      value={identifier}
+                      onChange={(e) => setIdentifier(e.target.value)}
+                      placeholder="01XXXXXXXXX or you@example.com"
+                      className={inputClass}
+                    />
+                    <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                  </div>
+                </div>
+
+                {/* Password Field */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className={labelClass}>Password</label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setToast(
+                          "A password reset link/OTP will be sent to your registered number."
+                        );
+                        setTimeout(() => setToast(null), 3000);
+                      }}
+                      className="text-xs font-semibold text-[#12509b] hover:underline"
+                    >
+                      Forgot Password?
+                    </button>
+                  </div>
+                  <div className="relative">
+                    <input
+                      required
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                      className={`${inputClass} pr-11`}
+                    />
+                    <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                    <button
+                      type="button"
+                      aria-label="Toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Remember Me */}
+                <div className="flex items-center justify-between pt-0.5 text-xs">
+                  <label className="flex cursor-pointer items-center gap-2 text-zinc-700">
+                    <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="h-4 w-4 rounded border-zinc-300 text-[#12509b] focus:ring-[#12509b]"
+                    />
+                    <span>Remember me</span>
+                  </label>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#12509b] text-sm font-bold tracking-wider text-white shadow-md shadow-[#12509b]/25 transition-all hover:bg-[#1660b8] hover:shadow-lg active:scale-[0.99] disabled:opacity-70"
+                >
+                  {submitting ? "SIGNING IN..." : "SIGN IN"}
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+
+                {/* Social Login Divider */}
+                <div className="relative my-6 text-center">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-zinc-200" />
+                  </div>
+                  <span className="relative bg-white px-3 text-xs font-semibold uppercase text-zinc-400">
+                    Or Sign In With
+                  </span>
+                </div>
+
+                {/* Social Buttons */}
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setToast("Connecting with Google...");
+                      setTimeout(() => setToast(null), 2500);
+                    }}
+                    className="flex h-11 items-center justify-center gap-2.5 rounded-lg border border-zinc-300 bg-white text-xs font-bold text-zinc-700 transition-colors hover:bg-zinc-50"
+                  >
+                    <svg className="h-4 w-4" viewBox="0 0 24 24">
+                      <path
+                        fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"
+                      />
+                      <path
+                        fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"
+                      />
+                      <path
+                        fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.04 0 12s.45 3.82 1.25 5.42l4.03-3.15z"
+                      />
+                      <path
+                        fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
+                      />
+                    </svg>
+                    <span>Google</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setToast("Connecting with Facebook...");
+                      setTimeout(() => setToast(null), 2500);
+                    }}
+                    className="flex h-11 items-center justify-center gap-2.5 rounded-lg border border-zinc-300 bg-white text-xs font-bold text-zinc-700 transition-colors hover:bg-zinc-50"
+                  >
+                    <svg
+                      className="h-4 w-4 fill-[#1877F2]"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                    <span>Facebook</span>
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* REGISTER FORM */}
+            {mode === "register" && (
+              <form onSubmit={handleRegister} className="mt-7 space-y-4">
+                <div>
+                  <h1 className="text-2xl font-extrabold tracking-tight text-zinc-900">
+                    Create your account
+                  </h1>
+                  <p className="mt-1.5 text-sm text-zinc-500">
+                    Sign up with your details to start shopping with member
+                    perks.
+                  </p>
+                </div>
+
+                {/* Full Name */}
+                <div className="space-y-1.5 pt-2">
+                  <label className={labelClass}>
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      required
+                      type="text"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      placeholder="Enter your full name"
+                      className={inputClass}
+                    />
+                    <User className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                  </div>
+                </div>
+
+                {/* Mobile Number */}
+                <div className="space-y-1.5">
+                  <label className={labelClass}>
+                    Mobile Number <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      required
+                      type="tel"
+                      value={registerPhone}
+                      onChange={(e) => setRegisterPhone(e.target.value)}
+                      placeholder="01XXXXXXXXX"
+                      pattern="01[0-9]{9}"
+                      className={inputClass}
+                    />
+                    <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                  </div>
+                </div>
+
+                {/* Email Address (Optional) */}
+                <div className="space-y-1.5">
+                  <label className={labelClass}>
+                    Email Address (Optional)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      value={registerEmail}
+                      onChange={(e) => setRegisterEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className={inputClass}
+                    />
+                    <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                  </div>
+                </div>
+
+                {/* Password & Confirm Password */}
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="space-y-1.5">
+                    <label className={labelClass}>
+                      Password <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        required
+                        type={showPassword ? "text" : "password"}
+                        value={registerPassword}
+                        onChange={(e) => setRegisterPassword(e.target.value)}
+                        placeholder="Min 6 chars"
+                        minLength={6}
+                        className={`${inputClass} pr-11`}
+                      />
+                      <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                      <button
+                        type="button"
+                        aria-label="Toggle password visibility"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className={labelClass}>
+                      Confirm Password <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        required
+                        type={showConfirmPassword ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="Repeat password"
+                        minLength={6}
+                        className={`${inputClass} pr-11`}
+                      />
+                      <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                      <button
+                        type="button"
+                        aria-label="Toggle confirm password visibility"
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+                      >
+                        {showConfirmPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Agree Terms */}
+                <div className="pt-1">
+                  <label className="flex cursor-pointer items-start gap-2 text-xs text-zinc-600">
+                    <input
+                      required
+                      type="checkbox"
+                      checked={agreeTerms}
+                      onChange={(e) => setAgreeTerms(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 rounded border-zinc-300 text-[#12509b] focus:ring-[#12509b]"
+                    />
+                    <span>
+                      I agree to the{" "}
+                      <a
+                        href="#"
+                        className="font-semibold text-[#12509b] hover:underline"
+                      >
+                        Terms & Conditions
+                      </a>{" "}
+                      and{" "}
+                      <a
+                        href="#"
+                        className="font-semibold text-[#12509b] hover:underline"
+                      >
+                        Privacy Policy
+                      </a>
+                      .
+                    </span>
+                  </label>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#12509b] text-sm font-bold tracking-wider text-white shadow-md shadow-[#12509b]/25 transition-all hover:bg-[#1660b8] hover:shadow-lg active:scale-[0.99] disabled:opacity-70"
+                >
+                  {submitting ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </form>
+            )}
+
+            <p className="mt-6 text-center text-xs leading-relaxed text-zinc-400">
+              By continuing, you agree to Loomora Lifestyle Ltd&apos;s Terms of
+              Use and Privacy Policy.
+            </p>
+          </div>
+      </div>
+    </div>
+  );
+}

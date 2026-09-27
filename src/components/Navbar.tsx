@@ -1,6 +1,10 @@
+"use client";
+
 import CategoryMenu from "@/components/CategoryMenu";
 import MobileMenu from "@/components/MobileMenu";
 import { navLinks } from "@/lib/navigation";
+import { useCart } from "@/providers/CartProvider";
+import { useWishlist } from "@/providers/WishlistProvider";
 import {
   Heart,
   MapPin,
@@ -11,23 +15,31 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-function SearchForm({ className = "" }: { className?: string }) {
+function SearchForm({
+  className = "",
+  inputId,
+}: {
+  className?: string;
+  inputId?: string;
+}) {
   return (
     <form action="/search" className={`flex items-center ${className}`}>
       <input
         type="search"
         name="q"
+        id={inputId}
         placeholder="I'm shopping for ..."
-        className="h-10 w-full min-w-0 rounded-l-md border-2 border-[#12509b] px-4 text-sm text-zinc-800 outline-none placeholder:text-zinc-400"
+        className="h-9 w-full min-w-0 rounded-l-md border-2 border-[#12509b] px-3 text-sm text-zinc-800 outline-none placeholder:text-zinc-400"
       />
-      <button
-        type="submit"
-        aria-label="Search"
-        className="flex h-10 w-12 shrink-0 items-center justify-center rounded-r-md bg-[#12509b] text-white transition-opacity hover:opacity-90"
-      >
-        <Search className="h-5 w-5" />
-      </button>
+        <button
+          type="submit"
+          aria-label="Search"
+          className="flex h-9 w-10 shrink-0 items-center justify-center rounded-r-md bg-[#12509b] text-white transition-opacity hover:opacity-90"
+        >
+          <Search className="h-4 w-4" />
+        </button>
     </form>
   );
 }
@@ -41,33 +53,48 @@ function IconBadge({ count }: { count: number }) {
 }
 
 export default function Navbar() {
+  const { count } = useCart();
+  const { count: wishlistCount } = useWishlist();
+  const pathname = usePathname();
   return (
     <header className="sticky top-0 z-50 w-full bg-white">
       <div className="flex h-14 w-full items-center gap-3 px-4 sm:h-16 md:gap-8">
-        <Link href="/" className="flex shrink-0 flex-col leading-none">
-          <span className="text-xl font-extrabold tracking-tight text-[#12509b] sm:text-2xl">
+        <Link
+          href="/"
+          className="ml-2 flex shrink-0 flex-col leading-none sm:ml-5"
+        >
+          <span className="text-2xl font-extrabold tracking-tight text-[#12509b] sm:text-[2rem]">
             Loomora
           </span>
-          <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-zinc-500">
+          <span className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.3em] text-zinc-500">
             lifestyle ltd
           </span>
         </Link>
 
-        <SearchForm className="mx-auto hidden md:flex md:max-w-[44rem] md:flex-1" />
+        <SearchForm className="mx-auto hidden md:flex md:max-w-[28rem] md:flex-1" />
 
         <div className="ml-auto flex items-center gap-3.5 sm:gap-4 md:gap-5">
-          <button aria-label="Search" className="text-[#12509b] md:hidden">
+          <button
+            type="button"
+            aria-label="Search"
+            onClick={() => {
+              const input = document.getElementById("mobile-search");
+              input?.scrollIntoView({ block: "center", behavior: "smooth" });
+              input?.focus();
+            }}
+            className="text-[#12509b] md:hidden"
+          >
             <Search className="h-5 w-5" />
           </button>
 
           <Link href="/wishlist" aria-label="Wishlist" className="relative text-[#12509b]">
             <Heart className="h-5 w-5 sm:h-6 sm:w-6" />
-            <IconBadge count={0} />
+            <IconBadge count={wishlistCount} />
           </Link>
 
           <Link href="/cart" aria-label="Cart" className="relative text-[#12509b]">
             <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
-            <IconBadge count={0} />
+            <IconBadge count={count} />
           </Link>
 
           <Link
@@ -87,27 +114,32 @@ export default function Navbar() {
       </div>
 
       <div className="px-4 pb-3 md:hidden">
-        <SearchForm />
+        <SearchForm inputId="mobile-search" />
       </div>
 
       <div className="border-y border-zinc-200">
         <div className="flex h-11 w-full items-center gap-4 px-4 sm:gap-6">
           <CategoryMenu />
 
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 lg:flex xl:gap-7">
-            {navLinks.map((link, index) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`whitespace-nowrap text-sm transition-colors hover:text-[#12509b] ${
-                  index === 0
-                    ? "font-bold text-[#12509b] underline underline-offset-4"
-                    : "font-medium text-zinc-700"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-3.5 lg:flex xl:gap-6">
+            {navLinks.map((link) => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`whitespace-nowrap text-[13px] transition-colors hover:text-[#12509b] xl:text-sm ${
+                    active
+                      ? "font-bold text-[#12509b] underline underline-offset-4"
+                      : link.highlight
+                        ? "font-medium text-[#12509b] underline underline-offset-4"
+                        : "font-medium text-zinc-700"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="ml-auto hidden shrink-0 items-center gap-5 text-xs font-semibold text-[#12509b] sm:text-sm lg:flex">
