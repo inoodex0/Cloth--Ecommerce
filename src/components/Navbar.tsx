@@ -1,7 +1,9 @@
 "use client";
 
 import CategoryMenu from "@/components/CategoryMenu";
+import MensMenu from "@/components/MensMenu";
 import MobileMenu from "@/components/MobileMenu";
+import WomensMenu from "@/components/WomensMenu";
 import { navLinks } from "@/lib/navigation";
 import { useCart } from "@/providers/CartProvider";
 import { useWishlist } from "@/providers/WishlistProvider";
@@ -124,6 +126,12 @@ export default function Navbar() {
           <nav className="hidden min-w-0 flex-1 items-center justify-center gap-3.5 lg:flex xl:gap-6">
             {navLinks.map((link) => {
               const active = pathname === link.href;
+              if (link.href === "/women") {
+                return <WomensMenu key={link.href} active={active} />;
+              }
+              if (link.href === "/men") {
+                return <MensMenu key={link.href} active={active} />;
+              }
               return (
                 <Link
                   key={link.href}
