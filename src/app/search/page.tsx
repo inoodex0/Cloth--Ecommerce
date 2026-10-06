@@ -10,23 +10,32 @@ export const metadata = {
     "Search Loomora for panjabi, saree, kurti, polo, denim, frock and more — 32 styles, one search away.",
 };
 
-const suggestions = ["Saree", "Polo", "Denim", "Frock", "Jacket", "Hoodie", "Kurti"];
+const suggestions = ["Saree", "Polo", "Denim", "Frock", "Jacket", "Hoodie", "Kurti", "Shirt", "Sweatshirt"];
 
 function searchProducts(query: string): CatalogProduct[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
-  return catalog.filter((product) =>
-    [
+
+  const words = q.split(/\s+/).filter(Boolean);
+
+  return catalog.filter((product) => {
+    const searchableText = [
       product.name,
       product.category,
       product.brand,
       product.colorName,
       product.productType,
       product.fabric,
+      product.fit,
+      ...(product.addition || []),
+      ...(product.festive || []),
     ]
       .filter(Boolean)
-      .some((field) => (field as string).toLowerCase().includes(q))
-  );
+      .join(" ")
+      .toLowerCase();
+
+    return words.every((word) => searchableText.includes(word));
+  });
 }
 
 export default async function SearchPage({
@@ -51,7 +60,7 @@ export default async function SearchPage({
 
       <div className="px-4 pb-10">
         {/* Search box */}
-        <form action="/search" className="flex max-w-xl items-center">
+        <form action="/search" method="GET" className="flex max-w-xl items-center">
           <input
             type="search"
             name="q"
@@ -62,7 +71,7 @@ export default async function SearchPage({
           <button
             type="submit"
             aria-label="Search"
-            className="flex h-11 w-12 shrink-0 items-center justify-center rounded-r-md bg-[#12509b] text-white transition-opacity hover:opacity-90"
+            className="flex h-11 w-12 shrink-0 items-center justify-center rounded-r-md bg-[#12509b] text-white transition-opacity hover:opacity-90 cursor-pointer"
           >
             <Search className="h-5 w-5" />
           </button>
@@ -76,8 +85,8 @@ export default async function SearchPage({
           </p>
         ) : (
           <p className="mt-5 text-sm text-zinc-500">
-            Kichhu search korun, ba niche theke browse korun —{" "}
-            <b className="text-zinc-900">{catalog.length}</b> products ready.
+            Search for products, categories, or colors —{" "}
+            <b className="text-zinc-900">{catalog.length}</b> products available.
           </p>
         )}
 
@@ -95,10 +104,10 @@ export default async function SearchPage({
           <div className="mt-6 rounded-2xl border border-zinc-200 bg-[#f7f8fc] p-8 text-center">
             <SearchX className="mx-auto h-10 w-10 text-zinc-400" />
             <h1 className="mt-4 text-lg font-bold text-zinc-900">
-              &quot;{query}&quot; er jonno kono product pawa jay ni
+              No products found for &quot;{query}&quot;
             </h1>
             <p className="mt-1.5 text-sm text-zinc-500">
-              Spelling check korun, ba niche theke popular search try korun:
+              Check spelling or try these popular categories:
             </p>
             <div className="mt-4 flex flex-wrap justify-center gap-2">
               {suggestions.map((term) => (

@@ -4,7 +4,7 @@ import { categoryHref, popularCategories } from "@/lib/categories";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function animateScroll(scroller: HTMLDivElement, target: number, duration = 700) {
   const start = scroller.scrollLeft;
@@ -24,19 +24,66 @@ function animateScroll(scroller: HTMLDivElement, target: number, duration = 700)
 
 export default function PopularCategories() {
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const directionRef = useRef<1 | -1>(1);
+  const [revealed, setRevealed] = useState(false);
+
+  const getStep = (scroller: HTMLDivElement) => {
+    const card = scroller.querySelector<HTMLElement>("a");
+    return (card ? card.offsetWidth : 200) + 20;
+  };
 
   const scrollOne = (direction: 1 | -1) => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
-    const card = scroller.querySelector<HTMLElement>("a");
-    const step = (card ? card.offsetWidth : 200) + 20;
     const max = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
     const target = Math.min(
       max,
-      Math.max(0, scroller.scrollLeft + direction * step)
+      Math.max(0, scroller.scrollLeft + direction * getStep(scroller))
+    );
+    animateScroll(scroller, target);
+    directionRef.current = direction;
+  };
+
+  const autoStep = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const max = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    if (max <= 0) return;
+
+    if (scroller.scrollLeft >= max - 1) directionRef.current = -1;
+    else if (scroller.scrollLeft <= 1) directionRef.current = 1;
+
+    const target = Math.min(
+      max,
+      Math.max(
+        0,
+        scroller.scrollLeft + directionRef.current * getStep(scroller)
+      )
     );
     animateScroll(scroller, target);
   };
+
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(scroller);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(autoStep, 1600);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="w-full px-4 py-6">
@@ -68,18 +115,25 @@ export default function PopularCategories() {
         ref={scrollerRef}
         className="flex gap-5 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {popularCategories.map((category) => (
+        {popularCategories.map((category, index) => (
           <Link
             key={category.label}
             href={categoryHref(category.label)}
-            className="group/item flex w-36 shrink-0 flex-col items-center gap-3 sm:w-40"
+            style={{ transitionDelay: `${index * 90}ms` }}
+            className={`group/item flex w-36 shrink-0 flex-col items-center gap-3 transition-[transform,opacity] duration-500 ease-out sm:w-40 xl:w-48 2xl:w-60 ${
+              revealed
+                ? "pointer-events-auto translate-x-0 opacity-100"
+                : `pointer-events-none opacity-0 ${
+                    index % 2 === 0 ? "-translate-x-12" : "translate-x-12"
+                  }`
+            }`}
           >
-            <span className="relative block h-36 w-36 overflow-hidden rounded-full border border-zinc-100 bg-zinc-50 sm:h-40 sm:w-40">
+            <span className="relative block h-36 w-36 overflow-hidden rounded-full border border-zinc-100 bg-zinc-50 sm:h-40 sm:w-40 xl:h-48 xl:w-48 2xl:h-60 2xl:w-60">
               <Image
                 src={category.src}
                 alt={category.label}
                 fill
-                sizes="160px"
+                sizes="(min-width: 1536px) 240px, (min-width: 1280px) 192px, 160px"
                 className="object-cover transition-transform duration-500 group-hover/item:scale-105"
               />
             </span>

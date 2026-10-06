@@ -30,6 +30,26 @@ const slides: Slide[] = [
  
 
 ];
+const heroTiles = [
+  {
+    src: "/images/men/men.avif",
+    label: "MENS",
+    caption: "Shirts, panjabis, denim & more",
+    href: "/men",
+  },
+  {
+    src: "/images/women/women.avif",
+    label: "WOMENS",
+    caption: "Kurtis, kameez, sarees & more",
+    href: "/women",
+  },
+  {
+    src: "/images/men/w-4.jpg",
+    label: "KIDS",
+    caption: "Playful styles for little ones",
+    href: "/kids",
+  },
+];
 export default function Hero() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -99,78 +119,30 @@ export default function Hero() {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <Link
-          href="/marketplace"
-          className="group relative block h-36 overflow-hidden rounded-xl sm:h-44 lg:h-auto lg:flex-1"
-        >
-          <Image
-            src="/images/c-2.avif"
-            alt="Marketplace essentials"
-            fill
-            sizes="(min-width: 1024px) 33vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-center p-5">
-            <span className="text-2xl font-extrabold tracking-wide text-white sm:text-3xl">
-              MARKETPLACE
-            </span>
-            <span className="mt-1 text-xs text-white/85 sm:text-sm">
-              Everyday essentials, all in one place
-            </span>
-          </div>
-        </Link>
-        <Link
-          href="/about"
-          className="group relative flex h-36 items-center gap-4 overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-r from-white to-sky-50 p-5 sm:h-44 lg:h-auto lg:flex-1"
-        >
-          <div className="min-w-0">
-            <span className="block text-2xl font-extrabold text-[#12509b] sm:text-3xl">
-              Loomora
-            </span>
-            <span className="mt-1 block text-sm font-medium text-zinc-600">
-              Live Better Lifestyle
-            </span>
-            <span className="mt-2 block text-xs font-semibold text-[#12509b]">
-              Shop the collection →
-            </span>
-          </div>
-          <div className="relative hidden h-full flex-1 overflow-hidden rounded-lg sm:block">
+        {heroTiles.map((tile) => (
+          <Link
+            key={tile.href}
+            href={tile.href}
+            className="group relative block h-36 overflow-hidden rounded-xl sm:h-44 lg:h-auto lg:flex-1"
+          >
             <Image
-              src="/images/c-9.avif"
-              alt="Loomora collection"
+              src={tile.src}
+              alt={tile.label}
               fill
-              sizes="200px"
+              sizes="(min-width: 1024px) 33vw, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
-          </div>
-        </Link>
-        <Link
-          href="/new-in"
-          className="group relative block h-36 overflow-hidden rounded-xl sm:h-44 lg:h-auto lg:flex-1"
-        >
-          <Image
-            src="/images/c-1.avif"
-            alt="Autumn verse collection"
-            fill
-            sizes="(min-width: 1024px) 33vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/15 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-center p-5">
-            <span className="flex items-baseline gap-2">
-              <span className="text-2xl font-extrabold text-orange-500 sm:text-3xl">
-                autumn
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
+            <div className="absolute inset-0 flex flex-col justify-center p-5">
+              <span className="text-2xl font-extrabold tracking-wide text-white sm:text-3xl">
+                {tile.label}
               </span>
-              <span className="font-serif text-xl italic text-amber-100 sm:text-2xl">
-                verse
+              <span className="mt-1 text-xs text-white/85 sm:text-sm">
+                {tile.caption}
               </span>
-            </span>
-            <span className="mt-1 text-xs text-white/85 sm:text-sm">
-              The season&apos;s biggest fashion drop
-            </span>
-          </div>
-        </Link>
+            </div>
+          </Link>
+        ))}
       </div>
       </section>
       <section className="w-full px-4 pb-6">

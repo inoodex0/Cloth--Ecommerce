@@ -4,7 +4,6 @@ import Link from "next/link";
 const banners = [
   { src: "/images/women/m-1.jpg", label: "FESTIVAL 26", href: "/festival-26", overlay: true },
   { src: "/images/men/w-1.jpg", label: "NEW IN", href: "/new-in", overlay: true },
-  { src: "/images/lo.png", label: "ACCESSORIES", href: "/accessories", overlay: false },
   { src: "/images/c-4.avif", label: "BEST DEALS", href: "/best-deals", overlay: true },
 ];
 
@@ -20,7 +19,7 @@ const offers = [
 export default function UnlimitedOffer() {
   return (
     <section className="w-full px-4 pb-6">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         {banners.map((banner) => (
           <Link
             key={banner.label}

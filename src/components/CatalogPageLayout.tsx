@@ -65,13 +65,11 @@ export default function CatalogPageLayout({
   title,
   topSubcategories,
   categories,
-  brands,
   products,
 }: CatalogProps) {
   // Filter States
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("All");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedPriceRange, setSelectedPriceRange] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState<string>("default");
@@ -101,7 +99,6 @@ export default function CatalogPageLayout({
 
   // Collapsible Accordion States
   const [catOpen, setCatOpen] = useState(true);
-  const [brandOpen, setBrandOpen] = useState(true);
   const [priceOpen, setPriceOpen] = useState(true);
   const [selectedFacets, setSelectedFacets] = useState<
     Record<string, string[]>
@@ -183,16 +180,9 @@ export default function CatalogPageLayout({
     toggleWishlistItem(id);
   };
 
-  const handleBrandToggle = (brand: string) => {
-    setSelectedBrands((prev) =>
-      prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
-    );
-  };
-
   const resetAllFilters = () => {
     setSelectedSubcategory("All");
     setSelectedCategory("All");
-    setSelectedBrands([]);
     setSelectedPriceRange(0);
     setSearchQuery("");
     setSortOption("default");
@@ -202,7 +192,6 @@ export default function CatalogPageLayout({
   const hasActiveFilters =
     selectedSubcategory !== "All" ||
     selectedCategory !== "All" ||
-    selectedBrands.length > 0 ||
     selectedPriceRange !== 0 ||
     searchQuery.trim() !== "" ||
     Object.values(selectedFacets).some((values) => values.length > 0);
@@ -227,11 +216,6 @@ export default function CatalogPageLayout({
           p.category.toLowerCase() === selectedCategory.toLowerCase() ||
           p.name.toLowerCase().includes(selectedCategory.toLowerCase())
       );
-    }
-
-    // Brand Filter
-    if (selectedBrands.length > 0) {
-      result = result.filter((p) => selectedBrands.includes(p.brand));
     }
 
     // Price Filter
@@ -287,7 +271,6 @@ export default function CatalogPageLayout({
     products,
     selectedSubcategory,
     selectedCategory,
-    selectedBrands,
     selectedPriceRange,
     selectedFacets,
     pageGender,
@@ -389,41 +372,6 @@ export default function CatalogPageLayout({
                       </button>
                     );
                   })}
-                </div>
-              )}
-            </div>
-
-            {/* Brands Accordion */}
-            <div className="rounded-md border border-zinc-200 bg-white overflow-hidden shadow-2xs">
-              <button
-                type="button"
-                onClick={() => setBrandOpen(!brandOpen)}
-                className="flex w-full items-center justify-between bg-zinc-50/70 px-4 py-3 text-base font-bold text-zinc-800 transition-colors hover:bg-zinc-100"
-              >
-                <span>Brands</span>
-                {brandOpen ? (
-                  <ChevronUp className="h-4 w-4 text-zinc-500" />
-                ) : (
-                  <ChevronDown className="h-4 w-4 text-zinc-500" />
-                )}
-              </button>
-
-              {brandOpen && (
-                <div className="p-3 space-y-2 text-sm">
-                  {brands.map((brand) => (
-                    <label
-                      key={brand}
-                      className="flex cursor-pointer items-center gap-2.5 text-zinc-700 hover:text-zinc-900"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedBrands.includes(brand)}
-                        onChange={() => handleBrandToggle(brand)}
-                        className="h-4 w-4 rounded border-zinc-300 text-[#12509b] focus:ring-[#12509b]"
-                      />
-                      <span>{brand}</span>
-                    </label>
-                  ))}
                 </div>
               )}
             </div>
@@ -621,20 +569,6 @@ export default function CatalogPageLayout({
                     </button>
                   </span>
                 )}
-                {selectedBrands.map((brand) => (
-                  <span
-                    key={brand}
-                    className="inline-flex items-center gap-1 rounded-full bg-zinc-200 px-2.5 py-1 text-xs font-semibold text-zinc-800"
-                  >
-                    Brand: {brand}
-                    <button
-                      type="button"
-                      onClick={() => handleBrandToggle(brand)}
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </span>
-                ))}
                 {selectedPriceRange !== 0 && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-zinc-200 px-2.5 py-1 text-xs font-semibold text-zinc-800">
                     Price: {priceRanges[selectedPriceRange].label}
@@ -766,7 +700,7 @@ export default function CatalogPageLayout({
                 {filteredProducts.map((product) => (
                   <div
                     key={product.id}
-                    className="flex items-center gap-4 rounded-md border border-zinc-200 bg-white p-3 shadow-2xs hover:shadow-md transition-shadow"
+                    className="flex flex-wrap items-center gap-3 rounded-md border border-zinc-200 bg-white p-3 shadow-2xs hover:shadow-md transition-shadow sm:gap-4"
                   >
                     <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded bg-zinc-100">
                       <Image
@@ -776,11 +710,11 @@ export default function CatalogPageLayout({
                         className="object-cover"
                       />
                     </div>
-                    <div className="flex-1 min-w-0">
+                    <div className="min-w-0 flex-1">
                       <span className="text-[11px] font-semibold text-[#12509b] uppercase">
                         {product.category} • {product.brand}
                       </span>
-                      <h3 className="text-sm font-bold text-zinc-900 truncate">
+                      <h3 className="truncate text-sm font-bold text-zinc-900">
                         {product.name}
                       </h3>
                       <div className="mt-1 flex items-center gap-2">
@@ -794,20 +728,22 @@ export default function CatalogPageLayout({
                         )}
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      onClick={(e) => handleAddToCart(product, e)}
-                      className="flex shrink-0 items-center gap-1.5 rounded-md bg-[#12509b] px-4 py-2 text-xs font-bold text-white transition-opacity hover:opacity-90"
-                    >
-                      <ShoppingBag className="h-3.5 w-3.5" />
-                      Add to Cart
-                    </button>
-                    <Link
-                      href={`/product/${product.id}`}
-                      className="shrink-0 rounded-md border border-zinc-300 bg-white px-4 py-2 text-xs font-bold text-zinc-700 transition-colors hover:bg-zinc-100"
-                    >
-                      View Product
-                    </Link>
+                    <div className="flex w-full shrink-0 items-center gap-2 sm:w-auto">
+                      <button
+                        type="button"
+                        onClick={(e) => handleAddToCart(product, e)}
+                        className="flex flex-1 items-center justify-center gap-1.5 rounded-md bg-[#12509b] px-4 py-2 text-xs font-bold text-white transition-opacity hover:opacity-90 sm:flex-none"
+                      >
+                        <ShoppingBag className="h-3.5 w-3.5" />
+                        Add to Cart
+                      </button>
+                      <Link
+                        href={`/product/${product.id}`}
+                        className="flex flex-1 items-center justify-center rounded-md border border-zinc-300 bg-white px-4 py-2 text-xs font-bold text-zinc-700 transition-colors hover:bg-zinc-100 sm:flex-none"
+                      >
+                        View Product
+                      </Link>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -905,27 +841,6 @@ export default function CatalogPageLayout({
                     >
                       {cat}
                     </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Brands */}
-              <div>
-                <h4 className="font-bold text-base text-zinc-900 mb-2">Brands</h4>
-                <div className="space-y-2 text-sm">
-                  {brands.map((brand) => (
-                    <label
-                      key={brand}
-                      className="flex items-center gap-2 text-zinc-700"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedBrands.includes(brand)}
-                        onChange={() => handleBrandToggle(brand)}
-                        className="rounded border-zinc-300 text-[#12509b]"
-                      />
-                      <span>{brand}</span>
-                    </label>
                   ))}
                 </div>
               </div>
