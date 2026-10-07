@@ -86,7 +86,7 @@ export default function NewCollection() {
           {products.map((product) => (
             <Link
               key={product.src}
-              href={`/product/${product.id}?price=${product.price}`}
+              href={`/product/${product.id}`}
               className="group flex w-52 shrink-0 flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-shadow hover:shadow-md sm:w-56"
             >
               <div className="relative">

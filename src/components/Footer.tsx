@@ -5,18 +5,17 @@ import Link from "next/link";
 const companyLinks = [
   { label: "Blogs", href: "#" },
   { label: "Media", href: "#" },
-  { label: "Outlets", href: "/outlets" },
   { label: "Careers", href: "#" },
-  { label: "About Us", href: "/about" },
+  { label: "About Us", href: "#" },
   { label: "Contact Us", href: "#" },
 ];
 
 const customerLinks = [
-  { label: "Login", href: "/account" },
-  { label: "Register", href: "/account" },
+  { label: "Login", href: "#" },
+  { label: "Register", href: "#" },
   { label: "Brands", href: "#" },
-  { label: "Best Deals", href: "/best-deals" },
-  { label: "Marketplace", href: "/marketplace" },
+  { label: "Best Deals", href: "#" },
+  { label: "Marketplace", href: "#" },
 ];
 
 const helpLinks = [

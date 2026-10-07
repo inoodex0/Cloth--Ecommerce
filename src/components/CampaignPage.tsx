@@ -69,7 +69,7 @@ function DealCard({ id, oldPrice }: DealOffer) {
 
   return (
     <Link
-      href={`/product/${product.id}?price=${product.price}&old=${oldPrice}`}
+      href={`/product/${product.id}`}
       className="group relative flex min-h-44 overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all hover:border-[#12509b] hover:shadow-md"
     >
       {hasDiscount && (

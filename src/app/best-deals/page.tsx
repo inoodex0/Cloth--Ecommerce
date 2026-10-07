@@ -280,7 +280,7 @@ function DealCard({ deal }: { deal: Deal }) {
 
   return (
     <Link
-      href={`/product/${deal.id}?price=${deal.price}&old=${deal.oldPrice}`}
+      href={`/product/${deal.id}`}
       className="group relative flex min-h-52 overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all hover:border-[#12509b] hover:shadow-md"
     >
       <span className="absolute left-0 top-0 z-10 rounded-br-lg bg-red-600 px-2.5 py-1 text-[11px] font-bold text-white">

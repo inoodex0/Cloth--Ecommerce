@@ -207,7 +207,7 @@ export default function DailyDeals() {
             {deals.map((deal) => (
               <Link
                 key={deal.id}
-                href={`/product/${deal.id}?price=${deal.price}&old=${deal.oldPrice}`}
+                href={`/product/${deal.id}`}
                 className="group flex w-52 shrink-0 flex-col overflow-hidden rounded-xl bg-white text-left shadow-sm transition-shadow hover:shadow-md sm:w-56"
               >
                 <div className="relative">
