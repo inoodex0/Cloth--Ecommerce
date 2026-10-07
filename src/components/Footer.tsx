@@ -1,30 +1,34 @@
+"use client";
+
 import { Mail, MapPin, Phone, Apple, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+const stop = (e: React.MouseEvent) => e.preventDefault();
+
 const companyLinks = [
-  { label: "Blogs", href: "#" },
-  { label: "Media", href: "#" },
-  { label: "Careers", href: "#" },
-  { label: "About Us", href: "#" },
-  { label: "Contact Us", href: "#" },
+  { label: "Blogs", href: "/#" },
+  { label: "Media", href: "/#" },
+  { label: "Careers", href: "/#" },
+  { label: "About Us", href: "/#" },
+  { label: "Contact Us", href: "/#" },
 ];
 
 const customerLinks = [
-  { label: "Login", href: "#" },
-  { label: "Register", href: "#" },
-  { label: "Brands", href: "#" },
-  { label: "Best Deals", href: "#" },
-  { label: "Marketplace", href: "#" },
+  { label: "Login", href: "/#" },
+  { label: "Register", href: "/#" },
+  { label: "Brands", href: "/#" },
+  { label: "Best Deals", href: "/#" },
+  { label: "Marketplace", href: "/#" },
 ];
 
 const helpLinks = [
-  { label: "FAQs", href: "#" },
-  { label: "Privacy Policy", href: "#" },
-  { label: "Cookies Policy", href: "#" },
-  { label: "Terms & Conditions", href: "#" },
-  { label: "Replacement Policy", href: "#" },
-  { label: "EMI Terms & Conditions", href: "#" },
+  { label: "FAQs", href: "/#" },
+  { label: "Privacy Policy", href: "/#" },
+  { label: "Cookies Policy", href: "/#" },
+  { label: "Terms & Conditions", href: "/#" },
+  { label: "Replacement Policy", href: "/#" },
+  { label: "EMI Terms & Conditions", href: "/#" },
 ];
 
 function FacebookIcon() {
@@ -103,6 +107,7 @@ function LinkColumn({
           <li key={link.label}>
             <Link
               href={link.href}
+              onClick={stop}
               className="text-sm text-zinc-600 transition-colors hover:text-[#12509b]"
             >
               {link.label}
@@ -154,14 +159,15 @@ export default function Footer() {
           </h3>
           <div className="flex items-center gap-3">
             {socials.map(({ label, Icon }) => (
-              <a
+              <Link
                 key={label}
-                href="#"
+                href="/#"
+                onClick={stop}
                 aria-label={label}
                 className="flex h-9 w-9 items-center justify-center rounded-full bg-[#12509b] text-white transition-opacity hover:opacity-85"
               >
                 <Icon />
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -169,8 +175,9 @@ export default function Footer() {
               Download App
             </h3>
             <div className="flex flex-wrap gap-3">
-              <a
-                href="#"
+              <Link
+                href="/#"
+                onClick={stop}
                 className="flex h-11 items-center gap-2.5 rounded-lg bg-zinc-900 px-3.5 text-white transition-opacity hover:opacity-85"
               >
                 <Play className="h-5 w-5 fill-current" />
@@ -178,9 +185,10 @@ export default function Footer() {
                   <span className="text-[9px] uppercase">Get it on</span>
                   <span className="text-sm font-semibold">Google Play</span>
                 </span>
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href="/#"
+                onClick={stop}
                 className="flex h-11 items-center gap-2.5 rounded-lg bg-zinc-900 px-3.5 text-white transition-opacity hover:opacity-85"
               >
                 <Apple className="h-5 w-5" />
@@ -188,7 +196,7 @@ export default function Footer() {
                   <span className="text-[9px] uppercase">Download on the</span>
                   <span className="text-sm font-semibold">App Store</span>
                 </span>
-              </a>
+              </Link>
             </div>
 
             <h3 className="mb-3 mt-6 text-base font-bold text-zinc-900">
