@@ -3,13 +3,13 @@ import ExclusiveCollection from "@/components/ExclusiveCollection";
 import Hero from "@/components/Hero";
 import NewCollection from "@/components/NewCollection";
 import PopularCategories from "@/components/PopularCategories";
-import UnlimitedOffer from "@/components/UnlimitedOffer";
+// import UnlimitedOffer from "@/components/UnlimitedOffer";
 
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col bg-white font-sans">
       <Hero />
-      <UnlimitedOffer />
+      {/* <UnlimitedOffer /> */}
       <ExclusiveCollection />
       <PopularCategories />
       <DailyDeals />

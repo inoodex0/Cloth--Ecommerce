@@ -135,7 +135,7 @@ export default function ProductDetail({
 
   const handleBuyNow = () => {
     addItem(cartPayload);
-    router.push("/cart");
+    router.push("/checkout");
   };
 
   const scrollThumbnails = (dir: 1 | -1) => {

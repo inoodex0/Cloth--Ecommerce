@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 type Deal = {
+  id: string;
   src: string;
   name: string;
   price: number;
@@ -16,6 +17,7 @@ type Deal = {
 
 const deals: Deal[] = [
   {
+    id: "m-6",
     src: "/images/c-1.avif",
     name: "Rust Bomber Jacket",
     price: 2000,
@@ -24,6 +26,7 @@ const deals: Deal[] = [
     available: 91,
   },
   {
+    id: "m-9",
     src: "/images/c-3.avif",
     name: "Classic Denim Trucker Jacket",
     price: 2199,
@@ -32,6 +35,7 @@ const deals: Deal[] = [
     available: 96,
   },
   {
+    id: "w-8",
     src: "/images/c-2.avif",
     name: "Everyday White Sweatshirt",
     price: 6000,
@@ -40,6 +44,7 @@ const deals: Deal[] = [
     available: 4,
   },
   {
+    id: "m-10",
     src: "/images/c-7.avif",
     name: "Grey Cotton Tee",
     price: 2690,
@@ -48,6 +53,7 @@ const deals: Deal[] = [
     available: 99,
   },
   {
+    id: "w-7",
     src: "/images/c-10.avif",
     name: "Knit Cardigan Rose",
     price: 23590,
@@ -56,6 +62,7 @@ const deals: Deal[] = [
     available: 5,
   },
   {
+    id: "m-11",
     src: "/images/c-8.avif",
     name: "Hoodie & Denim Combo Set",
     price: 1224,
@@ -64,6 +71,7 @@ const deals: Deal[] = [
     available: 17,
   },
   {
+    id: "m-7",
     src: "/images/c-6.avif",
     name: "Crimson Blazer Formal",
     price: 4500,
@@ -72,6 +80,7 @@ const deals: Deal[] = [
     available: 12,
   },
   {
+    id: "m-8",
     src: "/images/c-9.avif",
     name: "Crisp White Shirt",
     price: 1750,
@@ -197,9 +206,9 @@ export default function DailyDeals() {
           >
             {deals.map((deal) => (
               <Link
-                key={deal.name}
-                href="/best-deals"
-                className="group flex w-52 shrink-0 flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-shadow hover:shadow-md sm:w-56"
+                key={deal.id}
+                href={`/product/${deal.id}?price=${deal.price}&old=${deal.oldPrice}`}
+                className="group flex w-52 shrink-0 flex-col overflow-hidden rounded-xl bg-white text-left shadow-sm transition-shadow hover:shadow-md sm:w-56"
               >
                 <div className="relative">
                   <span className="absolute left-0 top-0 z-10 flex items-center gap-1 rounded-br-lg bg-red-600 px-2.5 py-1 text-xs font-semibold text-white">

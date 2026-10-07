@@ -63,12 +63,12 @@ export default function OutletsPage() {
 
             <h1 className="mt-5 max-w-2xl text-4xl font-black leading-[1.05] sm:text-6xl">
               Loomora Lifestyle{" "}
-              <span className="text-[#f2a06b]">Outlet</span> Kilombo
+              <span className="text-[#f2a06b]">Outlet</span> Network
             </h1>
 
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">
-              Product gulo hate dekhe, porhe try kore nin — live collection,
-              exchange policy ar in-store styling help ek jaygay.
+              See, feel and try the products in person — live collections,
+              exchange policy and in-store styling help, all in one place.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
@@ -90,14 +90,14 @@ export default function OutletsPage() {
         <div className="mt-10 flex items-end justify-between gap-4">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#e08245]">
-              Hamader Outlets
+              Our Outlets
             </p>
             <h2 className="mt-1 text-2xl font-black text-zinc-900 sm:text-3xl">
-              Nikater outlet khujun
+              Find an outlet near you
             </h2>
           </div>
           <span className="hidden text-sm text-zinc-500 sm:block">
-            Sob outlet open daily — 10 AM theke 9 PM
+            All outlets open daily — 10 AM to 9 PM
           </span>
         </div>
 
@@ -185,18 +185,18 @@ export default function OutletsPage() {
                 Coming Soon
               </p>
               <h2 className="mt-1 text-xl font-black text-zinc-900 sm:text-2xl">
-                Notun outlet khule asche
+                New outlets on the way
               </h2>
             </div>
             <p className="text-sm text-zinc-500">
-              Launch updates chan?{" "}
+              Want launch updates?{" "}
               <a
                 href="tel:01712345678"
                 className="font-semibold text-[#12509b] underline"
               >
                 01712-345678
               </a>{" "}
-              e call korun.
+              — give us a call.
             </p>
           </div>
 
@@ -226,11 +226,11 @@ export default function OutletsPage() {
         {/* CTA */}
         <div className="mt-8 flex flex-col items-center gap-4 rounded-2xl bg-[#12509b] px-6 py-10 text-center text-white">
           <h2 className="text-2xl font-black sm:text-3xl">
-            Visit korte chan — Convenience Stores o ache
+            Can&apos;t visit? We also have Convenience Stores
           </h2>
           <p className="max-w-xl text-sm text-white/80">
-            Same product, same price — 150+ partner convenience store e Loomora
-            collection dekhte paben.
+            Same product, same price — see the Loomora collection at 150+
+            partner convenience stores.
           </p>
           <Link
             href="/stores"
