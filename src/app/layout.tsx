@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ChatWidget from "@/components/ChatWidget";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import ScrollToTop from "@/components/ScrollToTop";
 import { CartProvider } from "@/providers/CartProvider";
 import { GsapProvider } from "@/providers/GsapProvider";
 import { SmoothScrollProvider } from "@/providers/SmoothScrollProvider";
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <GsapProvider>
             <CartProvider>
               <WishlistProvider>
+                <ScrollToTop />
                 <Navbar />
                 {children}
                 <Footer />

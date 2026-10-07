@@ -56,7 +56,7 @@ export default function ExclusiveCollection() {
         </Link>
 
         <Link
-          href="/accessories"
+          href="/puja-2026"
           className="group relative block min-h-[220px] overflow-hidden rounded-xl bg-zinc-100 lg:min-h-0"
         >
           <Image

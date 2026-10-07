@@ -149,15 +149,14 @@ export default function Hero() {
         <Link
           href="/accessories"
           aria-label="Sundry Blossom — Elevate Your Style"
-          className="group block overflow-hidden rounded-xl bg-[#f0e6d9]"
+          className="group relative block aspect-[2/1] overflow-hidden rounded-xl bg-[#f0e6d9]"
         >
           <Image
             src="/images/lo-1.png"
             alt="Sundry Blossom — Elevate Your Style. Accessories for a brighter you."
-            width={1664}
-            height={945}
+            fill
             sizes="100vw"
-            className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </Link>
       </section>

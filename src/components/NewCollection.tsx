@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 type Product = {
+  id: string;
   src: string;
   name: string;
   price: number;
@@ -13,17 +14,17 @@ type Product = {
 };
 
 const products: Product[] = [
-  { src: "/images/women/m-1.jpg", name: "Womens Saree", price: 1550, color: "#dc2626" },
-  { src: "/images/women/m-2.jpg", name: "Womens Saree", price: 1550, color: "#ec4899" },
-  { src: "/images/women/m-3.jpg", name: "Womens Saree", price: 1550, color: "#e5e7eb" },
-  { src: "/images/women/m-4.jpg", name: "Womens 2 Pcs Set – Regular Fit", price: 2890, color: "#f9a8d4" },
-  { src: "/images/women/m-5.jpg", name: "Womens Ethnic – Regular Fit", price: 2690, color: "#dc2626" },
-  { src: "/images/women/women.avif", name: "Womens Floral Kurti Set", price: 2490, color: "#fda4af" },
-  { src: "/images/men/men.avif", name: "Mens Patterned Shirt – Regular Fit", price: 2190, color: "#12509b" },
-  { src: "/images/men/w-1.jpg", name: "Mens Casual – Regular Fit", price: 1550, color: "#12509b" },
-  { src: "/images/men/w-2.jpg", name: "Mens Everyday Shirt", price: 1750, color: "#1e3a8a" },
-  { src: "/images/men/w-3.jpg", name: "Mens Winter Essential", price: 2290, color: "#71717a" },
-  { src: "/images/men/w-4.jpg", name: "Mens Classic Fit", price: 1990, color: "#1f2937" },
+  { id: "w-2", src: "/images/women/m-1.jpg", name: "Womens Saree", price: 1550, color: "#dc2626" },
+  { id: "w-3", src: "/images/women/m-2.jpg", name: "Womens Saree", price: 1550, color: "#ec4899" },
+  { id: "w-4", src: "/images/women/m-3.jpg", name: "Womens Saree", price: 1550, color: "#e5e7eb" },
+  { id: "w-5", src: "/images/women/m-4.jpg", name: "Womens 2 Pcs Set – Regular Fit", price: 2890, color: "#f9a8d4" },
+  { id: "w-6", src: "/images/women/m-5.jpg", name: "Womens Ethnic – Regular Fit", price: 2690, color: "#dc2626" },
+  { id: "w-1", src: "/images/women/women.avif", name: "Womens Floral Kurti Set", price: 2490, color: "#fda4af" },
+  { id: "m-1", src: "/images/men/men.avif", name: "Mens Patterned Shirt – Regular Fit", price: 2190, color: "#12509b" },
+  { id: "m-2", src: "/images/men/w-1.jpg", name: "Mens Casual – Regular Fit", price: 1550, color: "#12509b" },
+  { id: "m-3", src: "/images/men/w-2.jpg", name: "Mens Everyday Shirt", price: 1750, color: "#1e3a8a" },
+  { id: "m-4", src: "/images/men/w-3.jpg", name: "Mens Winter Essential", price: 2290, color: "#71717a" },
+  { id: "m-5", src: "/images/men/w-4.jpg", name: "Mens Classic Fit", price: 1990, color: "#1f2937" },
 ];
 
 export default function NewCollection() {
@@ -85,7 +86,7 @@ export default function NewCollection() {
           {products.map((product) => (
             <Link
               key={product.src}
-              href="/new-in"
+              href={`/product/${product.id}?price=${product.price}`}
               className="group flex w-52 shrink-0 flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-shadow hover:shadow-md sm:w-56"
             >
               <div className="relative">

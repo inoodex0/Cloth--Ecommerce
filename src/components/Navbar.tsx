@@ -10,10 +10,8 @@ import { useCart } from "@/providers/CartProvider";
 import { useWishlist } from "@/providers/WishlistProvider";
 import {
   Heart,
-  MapPin,
   Search,
   ShoppingCart,
-  SlidersHorizontal,
   Truck,
   User,
   X,
@@ -246,8 +244,7 @@ export default function Navbar() {
               <User className="h-4 w-4 sm:h-5 sm:w-5" />
             </span>
             <span className="hidden flex-col text-xs font-semibold leading-tight sm:flex">
-              <span>Login</span>
-              <span>Register</span>
+         
             </span>
           </Link>
         </div>
@@ -292,13 +289,6 @@ export default function Navbar() {
             <Link href="/order-tracking" className="flex items-center gap-1.5">
               <Truck className="h-4 w-4" />
               Order Tracking
-            </Link>
-            <Link href="/outlets" className="flex items-center gap-1.5">
-              <SlidersHorizontal className="h-4 w-4" />
-              Outlets
-            </Link>
-            <Link href="/stores" aria-label="Store locations">
-              <MapPin className="h-4 w-4" />
             </Link>
           </div>
 
