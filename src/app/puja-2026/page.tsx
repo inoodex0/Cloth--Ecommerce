@@ -19,19 +19,19 @@ export default function Puja2026Page() {
           image: "/images/men/men.avif",
           label: "Men's Puja Casuals",
           sub: "Shirts, Polo & Denim",
-          href: "/men",
+          href: "/product/m-1",
         },
         {
           image: "/images/men/w-1.jpg",
           label: "Women's Puja Style",
           sub: "Floral Dresses & Kurti",
-          href: "/women",
+          href: "/product/w-2",
         },
         {
           image: "/images/men/w-4.jpg",
           label: "Kids Puja Fits",
           sub: "Colorful & Comfy",
-          href: "/kids",
+          href: "/product/k-1",
         },
       ]}
       spotlights={[
@@ -39,19 +39,19 @@ export default function Puja2026Page() {
           image: "/images/women/m-2.jpg",
           label: "Men's Ethnic",
           sub: "Soft-tone panjabi",
-          href: "/men",
+          href: "/product/m-2",
         },
         {
           image: "/images/c-6.avif",
           label: "Party Blazers",
           sub: "Formal evening edit",
-          href: "/men",
+          href: "/product/m-7",
         },
         {
           image: "/images/c-8.avif",
           label: "Cozy Layers",
           sub: "Hoodies & Sweatshirts",
-          href: "/new-in",
+          href: "/product/m-11",
         },
       ]}
       dealTitle="Puja Special Deals"

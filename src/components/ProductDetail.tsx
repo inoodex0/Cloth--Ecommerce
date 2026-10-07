@@ -192,7 +192,7 @@ export default function ProductDetail({
               onMouseEnter={() => setIsZooming(true)}
               onMouseLeave={() => setIsZooming(false)}
               onMouseMove={handleMouseMove}
-              className="relative aspect-square w-full cursor-crosshair overflow-hidden rounded-md border border-zinc-200 bg-[#f7f7f7]"
+              className="relative aspect-square w-full cursor-crosshair overflow-hidden rounded-2xl border border-zinc-200 bg-[#f7f7f7] shadow-sm"
             >
               <Image
                 src={activeImage}
@@ -202,6 +202,17 @@ export default function ProductDetail({
                 sizes="(min-width: 1024px) 32rem, 100vw"
                 className="object-cover"
               />
+
+              {save && (
+                <span className="absolute left-0 top-0 z-10 rounded-br-xl bg-gradient-to-r from-red-600 to-red-500 px-3.5 py-2 text-xs font-black text-white shadow-sm">
+                  SAVE ৳ {save.toLocaleString()}
+                </span>
+              )}
+
+              <span className="absolute bottom-3 right-3 z-10 hidden items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-bold text-zinc-600 shadow-md backdrop-blur-xs lg:flex">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#12509b]" />
+                Hover to zoom
+              </span>
 
               {/* Moving Lens Box */}
               {isZooming && (

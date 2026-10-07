@@ -1,6 +1,9 @@
-import { ArrowRight, Eye } from "lucide-react";
+"use client";
+
+import { ArrowRight, ChevronDown, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { getProduct } from "@/lib/catalog";
 
 export type CollectionCard = {
@@ -13,9 +16,9 @@ export type CollectionCard = {
 export type DealOffer = { id: string; oldPrice: number };
 
 const sidebarLinks = [
-  { label: "Men's Collection", href: "/men" },
-  { label: "Women's Collection", href: "/women" },
-  { label: "Kid's Collection", href: "/kids" },
+  { label: "Mens Collection", href: "/men" },
+  { label: "Womens Collection", href: "/women" },
+  { label: "Kids Collection", href: "/kids" },
   { label: "Others Collection", href: "/new-in" },
 ];
 
@@ -23,35 +26,33 @@ function CollectionTile({
   card,
   size,
 }: {
-
   card: CollectionCard;
   size: "lg" | "sm";
 }) {
   return (
     <Link
       href={card.href}
-      className="group relative block overflow-hidden rounded-2xl bg-zinc-100 shadow-sm transition-shadow hover:shadow-lg"
+      className="group relative block overflow-hidden rounded-2xl bg-zinc-100 shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
       <div
-        className={`relative w-full ${size === "lg" ? "aspect-square max-h-80" : "aspect-[4/3] max-h-64"}`}
+        className={`relative w-full ${size === "lg" ? "aspect-[4/3] max-h-80" : "aspect-[16/10] max-h-64"}`}
       >
         <Image
           src={card.image}
           alt={card.label}
           fill
-          sizes={
-            size === "lg"
-              ? "(min-width: 1024px) 28vw, (min-width: 640px) 45vw, 90vw"
-              : "(min-width: 1024px) 28vw, (min-width: 640px) 45vw, 90vw"
-          }
+          sizes="(min-width: 1024px) 28vw, (min-width: 640px) 45vw, 90vw"
           className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 p-3.5 sm:p-4">
-          <p className="text-base font-bold text-white sm:text-lg">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute right-3.5 top-3.5 flex h-9 w-9 translate-y-1 items-center justify-center rounded-full bg-white text-zinc-900 opacity-0 shadow-lg transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <ArrowRight className="h-4 w-4" />
+        </div>
+        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+          <p className="text-lg font-black tracking-tight text-white sm:text-xl">
             {card.label}
           </p>
-          <p className="mt-0.5 text-xs font-medium text-white/80">
+          <p className="mt-1 text-xs font-medium text-white/80 sm:text-sm">
             {card.sub}
           </p>
         </div>
@@ -70,10 +71,10 @@ function DealCard({ id, oldPrice }: DealOffer) {
   return (
     <Link
       href={`/product/${product.id}`}
-      className="group relative flex min-h-44 overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all hover:border-[#12509b] hover:shadow-md"
+      className="group relative flex min-h-44 overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[#12509b]/40 hover:shadow-lg"
     >
       {hasDiscount && (
-        <span className="absolute left-0 top-0 z-10 rounded-br-lg bg-red-600 px-2.5 py-1 text-[11px] font-bold text-white">
+        <span className="absolute left-0 top-0 z-10 rounded-br-lg bg-gradient-to-r from-red-600 to-red-500 px-3 py-1.5 text-[11px] font-black text-white shadow-sm">
           Save ৳ {save.toLocaleString()}
         </span>
       )}
@@ -95,11 +96,11 @@ function DealCard({ id, oldPrice }: DealOffer) {
 
       <div className="flex flex-1 flex-col justify-center gap-2.5 p-4">
         <div className="flex flex-wrap items-baseline gap-2">
-          <span className="text-lg font-extrabold text-zinc-900">
+          <span className="text-lg font-black text-zinc-900">
             ৳ {product.price.toLocaleString()}
           </span>
           {hasDiscount && (
-            <span className="text-sm font-medium text-red-500 line-through">
+            <span className="text-sm font-semibold text-red-500 line-through">
               ৳ {oldPrice.toLocaleString()}
             </span>
           )}
@@ -120,11 +121,11 @@ function DealCard({ id, oldPrice }: DealOffer) {
 }
 
 type CampaignPageProps = {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
-  off: string;
-  note: string;
-  gradient: string;
+  off?: string;
+  note?: string;
+  gradient?: string;
   cards: CollectionCard[];
   spotlights: CollectionCard[];
   dealTitle: string;
@@ -133,17 +134,14 @@ type CampaignPageProps = {
 };
 
 export default function CampaignPage({
-  eyebrow,
   title,
-  off,
-  note,
-  gradient,
   cards,
   spotlights,
   dealTitle,
   dealHref,
   deals,
 }: CampaignPageProps) {
+  const [open, setOpen] = useState(false);
   return (
     <div className="w-full bg-white">
       <div className="px-4">
@@ -156,83 +154,79 @@ export default function CampaignPage({
           <span className="font-semibold text-zinc-800">{title}</span>
         </nav>
 
-        {/* Campaign Banner */}
-        <div
-          className={`relative overflow-hidden rounded-2xl ${gradient} px-6 py-6 text-white sm:px-8 sm:py-7`}
-        >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -bottom-16 left-1/3 h-40 w-40 rounded-full bg-white/5 blur-3xl"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -right-2 top-1/2 hidden -translate-y-1/2 text-[7rem] font-black leading-none text-white/10 sm:block"
-          >
-            %
-          </div>
-
-          <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/70">
-                {eyebrow}
-              </span>
-              <h1 className="mt-1.5 text-3xl font-black tracking-tight sm:text-4xl">
-                {title}
-              </h1>
-            </div>
-            <div className="flex flex-wrap items-center gap-2.5">
-              <span className="rounded-full bg-white px-4 py-1.5 text-xs font-black text-[#12509b] sm:text-sm">
-                {off}
-              </span>
-              <span className="rounded-full border border-white/60 px-4 py-1.5 text-xs font-semibold text-white/90 sm:text-sm">
-                {note}
-              </span>
-            </div>
-          </div>
-        </div>
-
         {/* Sidebar + Collections */}
-        <div className="flex gap-6 py-7">
-          <aside className="hidden w-44 shrink-0 lg:block">
-            <nav className="sticky top-32 space-y-3.5 border-r border-zinc-100 pr-4">
-              {sidebarLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block font-serif text-base text-[#e08245] transition-colors hover:text-[#c96a2e] hover:underline"
-                >
-                  {link.label}
-                </Link>
-              ))}
+        <div className="flex gap-6 py-8">
+          <aside className="hidden w-52 shrink-0 lg:block">
+            <nav className="sticky top-32 py-2">
+              <button
+                type="button"
+                onClick={() => setOpen((v) => !v)}
+                className="flex w-full items-center justify-center gap-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-zinc-400 transition-colors hover:text-zinc-600"
+                aria-expanded={open}
+              >
+                Collections
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+                />
+              </button>
+              <ul
+                className={`overflow-hidden transition-all duration-300 ${open ? "mt-5 max-h-60 opacity-100" : "max-h-0 opacity-0"}`}
+              >
+                {sidebarLinks.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="block py-2.5 text-center text-[13px] font-bold uppercase tracking-[0.14em] text-[#c17a5a] transition-colors hover:text-[#a85f3f]"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </nav>
           </aside>
 
-          <div className="min-w-0 flex-1 space-y-5">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {cards.map((card) => (
-                <CollectionTile key={card.label} card={card} size="lg" />
-              ))}
+          <div className="min-w-0 flex-1 space-y-6">
+            <div>
+              <div className="mb-4 flex items-center gap-3">
+                <span className="h-6 w-1.5 rounded-full bg-[#e08245]" />
+                <h2 className="text-xl font-black tracking-tight text-zinc-900 sm:text-2xl">
+                  Shop by Category
+                </h2>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {cards.map((card) => (
+                  <CollectionTile key={card.label} card={card} size="lg" />
+                ))}
+              </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {spotlights.map((card) => (
-                <CollectionTile key={card.label} card={card} size="sm" />
-              ))}
+            <div>
+              <div className="mb-4 flex items-center gap-3">
+                <span className="h-6 w-1.5 rounded-full bg-[#12509b]" />
+                <h2 className="text-xl font-black tracking-tight text-zinc-900 sm:text-2xl">
+                  Festive Spotlight
+                </h2>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {spotlights.map((card) => (
+                  <CollectionTile key={card.label} card={card} size="sm" />
+                ))}
+              </div>
             </div>
 
             {/* Festival Deals */}
-            <section>
-              <div className="mb-3.5 flex flex-wrap items-center justify-between gap-3">
-                <h2 className="text-xl font-extrabold tracking-tight text-zinc-900 sm:text-2xl">
-                  {dealTitle}
-                </h2>
+            <section className="rounded-3xl border border-zinc-200 bg-zinc-50 p-4 sm:p-6">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="h-6 w-1.5 rounded-full bg-red-500" />
+                  <h2 className="text-xl font-black tracking-tight text-zinc-900 sm:text-2xl">
+                    {dealTitle}
+                  </h2>
+                </div>
                 <Link
                   href={dealHref}
-                  className="flex items-center gap-1.5 text-sm font-bold text-[#12509b] transition-opacity hover:opacity-80 sm:text-base"
+                  className="flex items-center gap-1.5 rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-bold text-[#12509b] transition-all hover:border-[#12509b] hover:shadow-sm sm:text-base"
                 >
                   See More
                   <ArrowRight className="h-4 w-4" />

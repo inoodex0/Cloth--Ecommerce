@@ -19,19 +19,19 @@ export default function AspirePage() {
           image: "/images/women/m-5.jpg",
           label: "Men's Signature",
           sub: "Premium panjabi edit",
-          href: "/men",
+          href: "/product/m-7",
         },
         {
           image: "/images/men/w-3.jpg",
           label: "Women's Couture",
           sub: "Designer kameez & sets",
-          href: "/women",
+          href: "/product/w-5",
         },
         {
           image: "/images/men/w-4.jpg",
           label: "Kid's Style",
           sub: "Mini fashion, max charm",
-          href: "/kids",
+          href: "/product/k-9",
         },
       ]}
       spotlights={[
@@ -39,19 +39,19 @@ export default function AspirePage() {
           image: "/images/c-6.avif",
           label: "Power Dressing",
           sub: "Blazers & Formals",
-          href: "/men",
+          href: "/product/m-7",
         },
         {
           image: "/images/c-5.avif",
           label: "Soft Layers",
           sub: "Knitwear collection",
-          href: "/women",
+          href: "/product/w-7",
         },
         {
           image: "/images/c-1.avif",
           label: "Bomber Edit",
           sub: "Street premium",
-          href: "/men",
+          href: "/product/m-6",
         },
       ]}
       dealTitle="The Aspire Edit"

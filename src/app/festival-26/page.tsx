@@ -19,19 +19,19 @@ export default function Festival26Page() {
           image: "/images/women/m-4.jpg",
           label: "Men's Collection",
           sub: "Panjabi, Kurta & More",
-          href: "/men",
+          href: "/product/m-2",
         },
         {
           image: "/images/men/w-2.jpg",
           label: "Women's Collection",
           sub: "Saree, Kurti & Salwar",
-          href: "/women",
+          href: "/product/w-3",
         },
         {
           image: "/images/men/w-4.jpg",
           label: "Kid's Collection",
           sub: "Frocks, Kurti & Sets",
-          href: "/kids",
+          href: "/product/k-4",
         },
       ]}
       spotlights={[
@@ -39,19 +39,19 @@ export default function Festival26Page() {
           image: "/images/women/women.avif",
           label: "Printed Kurti",
           sub: "Everyday festive chic",
-          href: "/women",
+          href: "/product/w-1",
         },
         {
           image: "/images/women/m-3.jpg",
           label: "Men's Panjabi",
           sub: "Festive classics",
-          href: "/men",
+          href: "/product/m-1",
         },
         {
           image: "/images/c-10.avif",
           label: "Winter Special",
           sub: "Cardigans & Jackets",
-          href: "/new-in",
+          href: "/product/w-7",
         },
       ]}
       dealTitle="Fest70 Hot Picks"

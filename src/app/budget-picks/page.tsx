@@ -19,19 +19,19 @@ export default function BudgetPicksPage() {
           image: "/images/men/men.avif",
           label: "Men's Under ৳999",
           sub: "Tees, Polo & Casuals",
-          href: "/men",
+          href: "/product/m-10",
         },
         {
           image: "/images/women/women.avif",
           label: "Women's Under ৳999",
           sub: "Kurti & Everyday wear",
-          href: "/women",
+          href: "/product/w-1",
         },
         {
           image: "/images/men/w-4.jpg",
           label: "Kids Under ৳999",
           sub: "Play-ready styles",
-          href: "/kids",
+          href: "/product/k-5",
         },
       ]}
       spotlights={[
@@ -39,19 +39,19 @@ export default function BudgetPicksPage() {
           image: "/images/c-7.avif",
           label: "Budget Tees",
           sub: "Starting ৳490",
-          href: "/men",
+          href: "/product/k-2",
         },
         {
           image: "/images/c-2.avif",
           label: "Fleece Sweatshirt",
           sub: "Cozy on a budget",
-          href: "/new-in",
+          href: "/product/m-12",
         },
         {
           image: "/images/c-8.avif",
           label: "Everyday Hoodie",
           sub: "Warm & affordable",
-          href: "/new-in",
+          href: "/product/m-11",
         },
       ]}
       dealTitle="Cheapest Picks"
